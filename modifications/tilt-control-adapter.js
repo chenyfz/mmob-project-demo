@@ -58,9 +58,17 @@ const handleOrientation = (event) => {
 
     clearAction()
 }
-window.addEventListener("deviceorientation", handleOrientation, true);
-window.addEventListener('mousedown', jump)
-window.addEventListener('touchstart', jump)
-window.addEventListener('mouseup', stopJump)
-window.addEventListener('touchend', stopJump)
+
+const init = () => {
+    if (!!DeviceOrientationEvent.requestPermission) {
+        DeviceOrientationEvent.requestPermission()
+    }
+
+    window.addEventListener("deviceorientation", handleOrientation, true);
+    window.addEventListener('mousedown', jump)
+    window.addEventListener('touchstart', jump)
+    window.addEventListener('mouseup', stopJump)
+    window.addEventListener('touchend', stopJump)
+}
+
 
