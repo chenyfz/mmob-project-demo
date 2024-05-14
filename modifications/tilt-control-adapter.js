@@ -60,15 +60,23 @@ const handleOrientation = (event) => {
 }
 
 const init = () => {
-    if (!!DeviceOrientationEvent.requestPermission) {
-        DeviceOrientationEvent.requestPermission()
+    if (typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission) === "function" ) {
+        document.getElementById('ios-fire-button').addEventListener('click', () => {
+            DeviceOrientationEvent.requestPermission().then(res => {
+                if (res === 'granted') {
+                    window.addEventListener("deviceorientation", handleOrientation, true);
+                }
+            })
+        })
+    } else {
+        window.addEventListener("deviceorientation", handleOrientation, true);
     }
 
-    window.addEventListener("deviceorientation", handleOrientation, true);
     window.addEventListener('mousedown', jump)
     window.addEventListener('touchstart', jump)
     window.addEventListener('mouseup', stopJump)
     window.addEventListener('touchend', stopJump)
 }
 
+init()
 
