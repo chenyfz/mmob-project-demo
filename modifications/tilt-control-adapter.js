@@ -45,7 +45,20 @@ const stopJump = () => {
     document.dispatchEvent(keyboardUpEvent);
 }
 
+let previousGamma = -1
+const vibrate = (gamma) => {
+    if (previousGamma !== -1) {
+        if (Math.abs(previousGamma) < 7.5 && Math.abs(gamma) > 7.5 || Math.abs(gamma) < 7.5 && Math.abs(previousGamma) > 7.5) {
+            navigator.vibrate(15);
+        }
+    }
+
+    previousGamma = gamma
+}
+
 const handleOrientation = (event) => {
+    vibrate(event.gamma)
+
     if (event.gamma > 7.5) {
         goRight()
         return
